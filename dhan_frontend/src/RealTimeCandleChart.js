@@ -4,7 +4,6 @@ import ApexCharts from "react-apexcharts";
 const RealTimeCandleChart = () => {
   const [series, setSeries] = useState([{ data: [] }]);
   const [volumeSeries, setVolumeSeries] = useState([{ name: "Volume", data: [] }]);
-  const [vwapSeries, setVwapSeries] = useState([{ name: "VWAP", data: [] }]);
   const vwapData = useRef([]);
   const socketRef = useRef(null);
 
