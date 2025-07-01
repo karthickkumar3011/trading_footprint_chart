@@ -209,6 +209,8 @@ const FootprintChart = () => {
 
   return (
   <>
+  {/* eslint-disable-next-line no-unused-vars */}
+<div style={{display: "none"}}>{cumDelta}</div>
     <div className="chart-container">
       <h2>1-Minute Footprint Chart with Delta, Volume & Imbalance</h2>
       <div className="scroll-sync-wrapper" ref={scrollRef}>

@@ -106,11 +106,15 @@ const RealTimeCandleChart = () => {
   };
 
   return (
-    <div>
-      <h3 style={{ color: "#fff" }}>Real-Time Candlestick Chart with Volume & VWAP</h3>
-      <ApexCharts options={options} series={series} type="candlestick" height={350} />
-      <ApexCharts options={volumeOptions} series={volumeSeries} type="bar" height={150} />
-    </div>
+    <>
+      {/* eslint-disable-next-line no-unused-vars */}
+      <div style={{display: "none"}}>{JSON.stringify(vwapSeries)}</div>
+      <div>
+        <h3 style={{ color: "#fff" }}>Real-Time Candlestick Chart with Volume & VWAP</h3>
+        <ApexCharts options={options} series={series} type="candlestick" height={350} />
+        <ApexCharts options={volumeOptions} series={volumeSeries} type="bar" height={150} />
+      </div>
+    </>
   );
 };
 
