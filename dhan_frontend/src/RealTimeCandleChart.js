@@ -82,7 +82,7 @@ const RealTimeCandleChart = () => {
       labels: { style: { colors: "#fff" } },
     },
     grid: { borderColor: "#232a36" },
-    theme: { mode: "dark" },
+    theme: { mode: "light" },
     stroke: { width: [1, 2] },
   };
 

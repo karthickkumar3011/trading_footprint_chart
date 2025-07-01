@@ -38,9 +38,9 @@
 .sticky.metric-col {
   position: sticky;
   left: 0;
-  background-color: #1e1e1e;
+  background-color: black;
   font-weight: bold;
-  color: #ffffff;
+  color: white;
   z-index: 1;
   border-right: 1px solid #333;
 }
