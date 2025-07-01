@@ -1,7 +1,7 @@
 .chart-container {
   padding: 16px;
-  background: #121212;
-  color: #f0f0f0;
+  background: white;
+  color: black;
   font-family: "Segoe UI", sans-serif;
   overflow-x: auto;
 }
@@ -97,10 +97,10 @@
 .legend-container {
   margin-top: 24px;
   padding: 16px;
-  background-color: #1e1e1e;
+  background-color: white;
   border-radius: 8px;
   border: 1px solid #333;
-  color: #fff;
+  color: black;
 }
 
 .legend-container h3 {

@@ -29,7 +29,7 @@
 # feed = None
 
 # dhan_context = DhanContext(client_id, access_token)
-# instruments = [(MarketFeed.NSE_FNO, "124713", MarketFeed.Full)] # replace the security ID as you need
+# instruments = [(MarketFeed.NSE_FNO, "53429", MarketFeed.Full)] # replace the security ID as you need
 
 # # This thread handles async feed.connect() and polling
 # def start_dhan_feed():

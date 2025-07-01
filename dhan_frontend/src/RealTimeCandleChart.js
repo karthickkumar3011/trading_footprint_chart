@@ -101,7 +101,7 @@ const RealTimeCandleChart = () => {
     yaxis: {
       labels: { style: { colors: "#fff" } },
     },
-    theme: { mode: "dark" },
+    theme: { mode: "light" },
     grid: { borderColor: "#232a36" },
   };
 
