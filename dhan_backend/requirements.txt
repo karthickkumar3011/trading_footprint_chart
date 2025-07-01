@@ -1,4 +1,4 @@
 fastapi
 uvicorn
-dhanhq
+git+https://github.com/dhan-oss/DhanHQ-py.git
 python-dotenv
