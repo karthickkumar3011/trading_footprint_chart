@@ -67,6 +67,7 @@ import "./FootprintChart.css";
 
 const FootprintChart = () => {
   const [data, setData] = useState([]);
+  const [cumDelta, setCumDelta] = useState(0);
   const scrollRef = useRef(null);
 
   const mainMetrics = [
