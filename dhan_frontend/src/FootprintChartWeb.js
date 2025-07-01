@@ -129,7 +129,7 @@ const FootprintChart = () => {
   ];
 
   useEffect(() => {
-    const socket = new WebSocket("ws://localhost:8000/ws/feed");
+    const socket = new WebSocket("wss://trading-footprint-chart.onrender.com/ws/feed")
     let cumDeltaRunning = 0;
     const minuteDataRef = {};
 

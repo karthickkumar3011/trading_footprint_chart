@@ -9,7 +9,7 @@ const RealTimeCandleChart = () => {
   const socketRef = useRef(null);
 
   useEffect(() => {
-    socketRef.current = new WebSocket("ws://localhost:8000/ws/feed");
+    socketRef.current = new WebSocket("wss://trading-footprint-chart.onrender.com/ws/feed")
 
     socketRef.current.onmessage = (event) => {
       try {
