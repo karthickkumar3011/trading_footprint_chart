@@ -1,85 +1,85 @@
-# import asyncio
-# import json
-# import threading
-# from fastapi import FastAPI, WebSocket
-# from fastapi.middleware.cors import CORSMiddleware
-# from dhanhq import DhanContext, MarketFeed
-# from dotenv import load_dotenv
-# import os
+import asyncio
+import json
+import threading
+from fastapi import FastAPI, WebSocket
+from fastapi.middleware.cors import CORSMiddleware
+from dhanhq import DhanContext, MarketFeed
+from dotenv import load_dotenv
+import os
 
-# load_dotenv()
+load_dotenv()
 
 
-# client_id = os.getenv("CLIENT_ID")
-# access_token = os.getenv("ACCESS_TOKEN")
+client_id = os.getenv("CLIENT_ID")
+access_token = os.getenv("ACCESS_TOKEN")
 
-# app = FastAPI()
+app = FastAPI()
 
-# # CORS config
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=["*"],
-#     allow_credentials=True,
-#     allow_methods=["*"],
-#     allow_headers=["*"],
-# )
+# CORS config
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-# clients = []
-# latest_data = None
-# feed = None
+clients = []
+latest_data = None
+feed = None
 
-# dhan_context = DhanContext(client_id, access_token)
-# instruments = [(MarketFeed.NSE_FNO, "53429", MarketFeed.Full)] # replace the security ID as you need
+dhan_context = DhanContext(client_id, access_token)
+instruments = [(MarketFeed.NSE_FNO, "53429", MarketFeed.Full)] # replace the security ID as you need
 
-# # This thread handles async feed.connect() and polling
-# def start_dhan_feed():
-#     global feed, latest_data
-#     loop = asyncio.new_event_loop()
-#     asyncio.set_event_loop(loop)
-#     feed = MarketFeed(dhan_context, instruments, version="v2")
+# This thread handles async feed.connect() and polling
+def start_dhan_feed():
+    global feed, latest_data
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    feed = MarketFeed(dhan_context, instruments, version="v2")
 
-#     try:
-#         loop.run_until_complete(feed.connect())
-#         print("✅ Feed connected in background thread.")
+    try:
+        loop.run_until_complete(feed.connect())
+        print("✅ Feed connected in background thread.")
 
-#         while True:
-#             data = feed.get_data()
-#             if data:
-#                 latest_data = json.dumps(data)
-#             loop.run_until_complete(asyncio.sleep(0.2))
+        while True:
+            data = feed.get_data()
+            if data:
+                latest_data = json.dumps(data)
+            loop.run_until_complete(asyncio.sleep(0.2))
 
-#     except Exception as e:
-#         print("❌ Feed thread error:", e)
+    except Exception as e:
+        print("❌ Feed thread error:", e)
 
-# # This sends latest data to all websocket clients
-# async def push_data():
-#     while True:
-#         if latest_data:
-#             for ws in clients:
-#                 try:
-#                     await ws.send_text(latest_data)
-#                 except Exception as e:
-#                     print("❌ WebSocket send error:", e)
-#         await asyncio.sleep(2)
+# This sends latest data to all websocket clients
+async def push_data():
+    while True:
+        if latest_data:
+            for ws in clients:
+                try:
+                    await ws.send_text(latest_data)
+                except Exception as e:
+                    print("❌ WebSocket send error:", e)
+        await asyncio.sleep(2)
 
-# @app.on_event("startup")
-# async def on_startup():
-#     threading.Thread(target=start_dhan_feed, daemon=True).start()
-#     asyncio.create_task(push_data())
+@app.on_event("startup")
+async def on_startup():
+    threading.Thread(target=start_dhan_feed, daemon=True).start()
+    asyncio.create_task(push_data())
 
-# @app.websocket("/ws/feed")
-# async def websocket_endpoint(websocket: WebSocket):
-#     await websocket.accept()
-#     clients.append(websocket)
-#     print("✅ Web client connected")
-#     try:
-#         while True:
-#             await asyncio.sleep(2)
-#     except:
-#         print("❌ Client disconnected")
-#     finally:
-#         clients.remove(websocket)
-#         await websocket.close()
+@app.websocket("/ws/feed")
+async def websocket_endpoint(websocket: WebSocket):
+    await websocket.accept()
+    clients.append(websocket)
+    print("✅ Web client connected")
+    try:
+        while True:
+            await asyncio.sleep(2)
+    except:
+        print("❌ Client disconnected")
+    finally:
+        clients.remove(websocket)
+        await websocket.close()
 
 # dummy data for testing
 
